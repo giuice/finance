@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import ExpenseManager from './components/ExpenseManager';
+import CategoryManager from './components/CategoryManager';
 import CSVImport from './components/CSVImport';
 import BudgetSettings from './components/BudgetSettings';
 import { initializeDatabase } from './db/database';
@@ -47,6 +48,8 @@ function App() {
         return <Dashboard />;
       case 'expenses':
         return <ExpenseManager />;
+      case 'categories':
+        return <CategoryManager />;
       case 'import':
         return <CSVImport />;
       case 'budget':

@@ -45,6 +45,37 @@ class FinanceDatabase extends Dexie {
       .toArray();
   }
 
+  async searchExpensesByDescription(searchTerm: string): Promise<Expense[]> {
+    if (!searchTerm.trim()) {
+      return [];
+    }
+    
+    return await this.expenses
+      .filter(expense => 
+        expense.description.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .toArray();
+  }
+
+  async getAllExpenses(): Promise<Expense[]> {
+    return await this.expenses.toArray();
+  }
+
+  async updateMultipleExpenses(expenseIds: number[], changes: Partial<Expense>): Promise<number> {
+    let updatedCount = 0;
+    
+    for (const id of expenseIds) {
+      try {
+        await this.expenses.update(id, changes);
+        updatedCount++;
+      } catch (error) {
+        console.error(`Failed to update expense with ID ${id}:`, error);
+      }
+    }
+    
+    return updatedCount;
+  }
+
   // Helper methods for categories
   async addCategory(category: Category): Promise<number> {
     return await this.categories.add(category);
@@ -89,6 +120,8 @@ class FinanceDatabase extends Dexie {
       { name: 'Health', color: '#00BCD4', budgetLimit: 0 },
       { name: 'Education', color: '#3F51B5', budgetLimit: 0 },
       { name: 'Bills', color: '#F44336', budgetLimit: 0 },
+      { name: 'Boteco', color: '#795548', budgetLimit: 0 },
+      { name: 'Supermercado', color: '#FFC107', budgetLimit: 0 },
       { name: 'Other', color: '#607D8B', budgetLimit: 0 }
     ];
 

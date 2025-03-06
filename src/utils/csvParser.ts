@@ -79,12 +79,14 @@ const categorizeExpense = (description: string): string => {
   
   // Define category keywords
   const categories: { [key: string]: string[] } = {
-    'Food': ['mercado', 'supermercado', 'pao', 'restaurante', 'ifood', 'rappi', 'acucar'],
-    'Transportation': ['uber', '99', 'taxi', 'combustivel', 'gasolina', 'estacionamento', 'metro', 'onibus'],
+    'Food': ['restaurante', 'ifood', 'rappi'],
+    'Boteco': ['cerveja', 'bar', 'boteco', 'chopp', 'drink', 'bebida', 'magal'],
+    'Supermercado': ['mercado', 'supermercado', 'pao', 'acucar','zona sul','super'],
+    'Transportation': ['uber', '99', 'taxi', 'combustivel', 'gasolina', 'estacionamento', 'metro', 'onibus','rio card'],
     'Housing': ['aluguel', 'condominio', 'agua', 'luz', 'energia', 'gas'],
     'Entertainment': ['netflix', 'spotify', 'cinema', 'teatro', 'show', 'tidal', 'disney'],
-    'Shopping': ['shopping', 'loja', 'magazine', 'americanas', 'amazon', 'aliexpress'],
-    'Health': ['farmacia', 'medico', 'consulta', 'exame', 'academia', 'gym', 'metavet'],
+    'Shopping': ['shopping', 'loja', 'magazine', 'americanas', 'amazon', 'aliexpress', 'parcela'],
+    'Health': ['farmacia', 'medico', 'consulta', 'exame', 'academia', 'gym', 'metavet','raia', 'droga'],
     'Education': ['curso', 'livro', 'escola', 'faculdade', 'universidade'],
     'Bills': ['fatura', 'conta', 'telefone', 'internet', 'celular', 'seguro']
   };

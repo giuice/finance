@@ -30,6 +30,7 @@ export default function Layout({ children, activeTab, onTabChange }: LayoutProps
   const navItems: NavItem[] = [
     { name: 'Dashboard', icon: '📊', id: 'dashboard' },
     { name: 'Expenses', icon: '💰', id: 'expenses' },
+    { name: 'Category Manager', icon: '🏷️', id: 'categories' },
     { name: 'Import CSV', icon: '📥', id: 'import' },
     { name: 'Budget', icon: '💵', id: 'budget' },
   ];
