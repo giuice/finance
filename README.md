@@ -1,54 +1,73 @@
-# React + TypeScript + Vite
+# Finance App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is a personal finance management application built with React, TypeScript, and Vite. It allows users to track their expenses, set budgets, and import data from CSV files.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+*   **Expense Management:** Add, edit, and delete expense entries.
+*   **Budget Settings:** Set and manage budget limits for different categories.
+*   **CSV Import:** Import expense data from CSV files.
+*   **Dashboard:** Visualize financial data with interactive charts and summaries.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1.  Clone the repository:
+
+    ```bash
+    git clone https://github.com/giuice/finance.git
+    ```
+
+2.  Navigate to the project directory:
+
+    ```bash
+    cd finance
+    ```
+
+3.  Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+## Usage
+
+To run the app locally:
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This will start the development server, and you can access the app in your browser (usually at `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Technologies Used
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+*   React
+*   TypeScript
+*   Vite
+*   Tailwind CSS
+*   IndexedDB (for local data storage)
+*   ESLint (for code linting)
+
+## File Structure
+
 ```
+finance/
+├── public/             # Static assets
+├── src/
+│   ├── assets/         # Images and other assets
+│   ├── components/     # React components
+│   ├── db/             # Database interaction logic
+│   ├── types/          # TypeScript type definitions
+│   ├── utils/          # Utility functions
+│   ├── App.tsx         # Main application component
+│   ├── main.tsx        # Entry point
+│   └── index.css       # Global styles
+├── .gitignore          # Files and directories to ignore in Git
+├── index.html          # HTML template
+├── package.json        # Project metadata and dependencies
+├── postcss.config.js   # PostCSS configuration
+├── tailwind.config.js  # Tailwind CSS configuration
+├── tsconfig.json       # TypeScript configuration
+└── vite.config.ts      # Vite configuration
