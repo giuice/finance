@@ -34,7 +34,6 @@
   - Tables for expenses, categories, and monthly budgets
   - CRUD operations for all entities
   - Filtering and querying capabilities
-  - Improved transaction handling
   - Category duplication prevention and cleanup
 
 ## What's Left to Build

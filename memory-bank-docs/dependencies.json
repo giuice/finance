@@ -1,0 +1,141 @@
+{
+  "moduleRelationships": {
+    "src": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Main source code directory"
+    },
+    "src/components": {
+      "depends_on": ["src/db", "src/types", "src/utils", "src/hooks"],
+      "depended_by": ["src/App.tsx"],
+      "description": "UI components directory"
+    },
+    "src/db": {
+      "depends_on": ["src/types"],
+      "depended_by": ["src/components", "src/hooks", "src/App.tsx"],
+      "description": "Database operations and schema"
+    },
+    "src/types": {
+      "depends_on": [],
+      "depended_by": ["src/db", "src/components", "src/hooks", "src/utils"],
+      "description": "TypeScript type definitions"
+    },
+    "src/hooks": {
+      "depends_on": ["src/db", "src/types"],
+      "depended_by": ["src/components"],
+      "description": "Custom React hooks"
+    },
+    "src/utils": {
+      "depends_on": ["src/types"],
+      "depended_by": ["src/components", "src/hooks"],
+      "description": "Utility functions"
+    },
+    "public": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Static assets directory"
+    }
+  },
+  "fileRelationships": {
+    "src/App.tsx": {
+      "depends_on": [
+        "src/components/Layout.tsx",
+        "src/components/Dashboard.tsx",
+        "src/components/ExpenseManager.tsx",
+        "src/components/CategoryManager.tsx",
+        "src/components/CSVImport.tsx",
+        "src/components/BudgetSettings.tsx",
+        "src/db/database.ts"
+      ],
+      "depended_by": ["src/main.tsx"],
+      "description": "Main application component with routing"
+    },
+    "src/main.tsx": {
+      "depends_on": ["src/App.tsx", "src/index.css"],
+      "depended_by": [],
+      "description": "Application entry point"
+    },
+    "src/db/database.ts": {
+      "depends_on": ["src/types/index.ts"],
+      "depended_by": [
+        "src/App.tsx",
+        "src/components/Dashboard.tsx",
+        "src/components/ExpenseManager.tsx",
+        "src/components/CategoryManager.tsx",
+        "src/components/CSVImport.tsx",
+        "src/components/BudgetSettings.tsx"
+      ],
+      "description": "Dexie database configuration and operations"
+    },
+    "src/types/index.ts": {
+      "depends_on": [],
+      "depended_by": [
+        "src/db/database.ts",
+        "src/components/Dashboard.tsx",
+        "src/components/ExpenseManager.tsx",
+        "src/components/CategoryManager.tsx",
+        "src/components/CSVImport.tsx",
+        "src/components/BudgetSettings.tsx",
+        "src/components/transactions/TransactionFilters.tsx"
+      ],
+      "description": "Type definitions for the application"
+    },
+    "src/components/Layout.tsx": {
+      "depends_on": [],
+      "depended_by": ["src/App.tsx"],
+      "description": "Main layout component with navigation"
+    },
+    "src/components/Dashboard.tsx": {
+      "depends_on": ["src/db/database.ts", "src/types/index.ts"],
+      "depended_by": ["src/App.tsx"],
+      "description": "Dashboard component with financial overview"
+    },
+    "src/components/ExpenseManager.tsx": {
+      "depends_on": ["src/db/database.ts", "src/types/index.ts"],
+      "depended_by": ["src/App.tsx"],
+      "description": "Expense management component"
+    },
+    "src/components/CategoryManager.tsx": {
+      "depends_on": ["src/db/database.ts", "src/types/index.ts"],
+      "depended_by": ["src/App.tsx"],
+      "description": "Category management component"
+    },
+    "src/components/CSVImport.tsx": {
+      "depends_on": ["src/db/database.ts", "src/types/index.ts"],
+      "depended_by": ["src/App.tsx"],
+      "description": "CSV import component"
+    },
+    "src/components/BudgetSettings.tsx": {
+      "depends_on": ["src/db/database.ts", "src/types/index.ts"],
+      "depended_by": ["src/App.tsx"],
+      "description": "Budget settings component"
+    }
+  },
+  "documentationRelationships": {
+    "README.md": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Project overview and setup instructions"
+    },
+    "memory-bank-docs/projectbrief.md": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Project mission, objectives, and constraints"
+    },
+    "memory-bank-docs/productContext.md": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Product purpose and user needs"
+    },
+    "memory-bank-docs/activeContext.md": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Current project state and priorities"
+    },
+    "memory-bank-docs/changelog.md": {
+      "depends_on": [],
+      "depended_by": [],
+      "description": "Log of significant codebase changes"
+    }
+  }
+}
