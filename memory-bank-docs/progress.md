@@ -60,8 +60,8 @@
 - Data fetching has been optimized with appropriate cache times
 
 ## Known Issues
-- Some categories ('Boteco' and 'Supermercado') may not be appearing in the database despite being in the default list
-- Need to further investigate why the initialization of default categories might be inconsistent
+- **CRITICAL**: Categories are duplicating (two of each category with same name), even after database reset
+- **CRITICAL**: Database access has become catastrophically slow - pages that previously loaded instantly now take up to 10 minutes to load with minimal data
 - Dashboard charts may need further performance optimization for large datasets
 - Mobile responsiveness can be improved in some views
 - No data backup or export functionality yet

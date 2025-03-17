@@ -18,13 +18,19 @@ export interface Category {
   color: string;
 }
 
-export interface MonthlyBudget {
+export interface BudgetPeriod {
   id?: number;
-  month: number;
-  year: number;
-  salary: number;
-  totalExpenses: number;
-  remainingBudget: number;
+  periodType: 'daily' | 'weekly' | 'monthly' | 'custom';
+  startDate: Date;
+  endDate: Date;
+  salary?: number;
+  totalExpenses?: number;
+  remainingBudget?: number;
+  month?: number;
+  year?: number;
+  categories: {
+    [key: number]: number;
+  };
 }
 
 export interface NubankCSVRow {

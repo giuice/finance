@@ -1,17 +1,24 @@
 import Dexie, { Table } from 'dexie';
-import { Expense, Category, MonthlyBudget } from '../types';
+import { Expense, Category, BudgetPeriod } from '../types';
 
 class FinanceDatabase extends Dexie {
   expenses!: Table<Expense, number>;
   categories!: Table<Category, number>;
-  monthlyBudgets!: Table<MonthlyBudget, number>;
+  budgets!: Table<BudgetPeriod, number>;
 
   constructor() {
     super('FinanceDatabase');
-    this.version(1).stores({
-      expenses: '++id, date, category, isFixedExpense',
-      categories: '++id, name',
-      monthlyBudgets: '++id, [month+year]'
+    this.version(3).stores({
+      expenses: '++id, date, category, isFixedExpense, [category+date]',
+      categories: '++id, &name',
+      budgets: '++id, periodType, startDate, endDate, [startDate+endDate]'
+    }).upgrade(trans => {
+      // Clear budgets when upgrading from v1->v2
+      // We're now at v3 but keeping this for backward compatibility
+      trans.table('budgets').clear();
+      
+      // For v2->v3 upgrade, we'll run the duplicate cleanup
+      // when the app starts via initializeDatabase
     });
   }
 
@@ -94,18 +101,18 @@ class FinanceDatabase extends Dexie {
   }
 
   // Helper methods for monthly budgets
-  async addMonthlyBudget(budget: MonthlyBudget): Promise<number> {
-    return await this.monthlyBudgets.add(budget);
+  async addBudgetPeriod(period: BudgetPeriod): Promise<number> {
+    return await this.budgets.add(period);
   }
 
-  async updateMonthlyBudget(id: number, changes: Partial<MonthlyBudget>): Promise<number> {
-    return await this.monthlyBudgets.update(id, changes);
+  async updateBudgetPeriod(id: number, changes: Partial<BudgetPeriod>): Promise<number> {
+    return await this.budgets.update(id, changes);
   }
 
-  async getMonthlyBudget(month: number, year: number): Promise<MonthlyBudget | undefined> {
-    return await this.monthlyBudgets
-      .where('[month+year]')
-      .equals([month, year])
+  async getBudgetPeriod(startDate: Date, endDate: Date): Promise<BudgetPeriod | undefined> {
+    return await this.budgets
+      .where('[startDate+endDate]')
+      .equals([startDate, endDate])
       .first();
   }
 
@@ -127,11 +134,61 @@ class FinanceDatabase extends Dexie {
 
     const existingCategories = await this.getAllCategories();
     
+    // Only add default categories if there are no categories at all
     if (existingCategories.length === 0) {
       for (const category of defaultCategories) {
-        await this.addCategory(category);
+        await this.addCategoryIfNotExists(category);
       }
     }
+  }
+
+  // Add a new utility to check for and clean up duplicate categories
+  async cleanupDuplicateCategories(): Promise<number> {
+    const allCategories = await this.getAllCategories();
+    const uniqueNames = new Map<string, Category>();
+    const duplicateIds: number[] = [];
+    
+    // Identify duplicates (keep the first occurrence of each name)
+    for (const category of allCategories) {
+      if (!uniqueNames.has(category.name)) {
+        uniqueNames.set(category.name, category);
+      } else if (category.id) {
+        duplicateIds.push(category.id);
+      }
+    }
+    
+    // Delete all duplicates
+    for (const id of duplicateIds) {
+      await this.deleteCategory(id);
+    }
+    
+    console.log(`Cleaned up ${duplicateIds.length} duplicate categories`);
+    return duplicateIds.length;
+  }
+
+  // Add a helper method to check if a category name already exists
+  async categoryNameExists(name: string): Promise<boolean> {
+    const count = await this.categories
+      .where('name')
+      .equals(name)
+      .count();
+    
+    return count > 0;
+  }
+
+  // Add a method to safely add a category if it doesn't already exist
+  async addCategoryIfNotExists(category: Category): Promise<number> {
+    const exists = await this.categoryNameExists(category.name);
+    if (!exists) {
+      return await this.addCategory(category);
+    }
+    // Return the ID of the existing category
+    const existingCategory = await this.categories
+      .where('name')
+      .equals(category.name)
+      .first();
+      
+    return existingCategory?.id || -1;
   }
 }
 
@@ -139,5 +196,9 @@ export const db = new FinanceDatabase();
 
 // Initialize the database
 export const initializeDatabase = async (): Promise<void> => {
+  // Clean up any duplicate categories first
+  await db.cleanupDuplicateCategories();
+  
+  // Then initialize default categories if needed
   await db.initializeDefaultCategories();
 };

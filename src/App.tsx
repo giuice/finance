@@ -8,8 +8,21 @@ import CSVImport from './components/CSVImport';
 import BudgetSettings from './components/BudgetSettings';
 import { initializeDatabase } from './db/database';
 
-// Create a client
-const queryClient = new QueryClient();
+// Create a client with optimized settings
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Cache data for 10 minutes
+      gcTime: 600000,
+      // Consider data fresh for 60 seconds
+      staleTime: 60000, 
+      // Don't refetch on window focus
+      refetchOnWindowFocus: false,
+      // Only retry failed queries once
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');

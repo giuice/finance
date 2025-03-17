@@ -5,27 +5,31 @@ React-based personal finance management application with TypeScript, Vite, and T
 
 ## Task Priorities
 
-1. Expense Tracking
+1. **Fix Critical Database Issues**
+   - Resolve category duplication issue - categories are duplicating (two of each with same name) even after database reset
+   - Fix catastrophic database performance issue - pages load in 10 minutes instead of instantly with minimal data
+
+2. Expense Tracking
    - Core functionality
    - Depends on database setup
    - Essential for user data entry
 
-2. Category Management
+3. Category Management
    - Required for organizing transactions
    - Enhances expense tracking
    - Enables meaningful analytics
 
-3. Budget Settings
+4. Budget Settings
    - Builds on categories and expense tracking
    - Enables financial planning
    - Core feature for user goals
 
-4. CSV Import
+5. CSV Import
    - Depends on database and category systems
    - Quality of life feature
    - Encourages user adoption
 
-5. Analytics Dashboard
+6. Analytics Dashboard
    - Integrates all other features
    - Provides value through insights
    - Enhances user engagement
